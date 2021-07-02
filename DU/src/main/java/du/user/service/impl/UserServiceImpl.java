@@ -11,11 +11,11 @@ import du.user.service.UserService;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private UserDAO userMapper;
+	private UserDAO userDAO;
 	
 	@Override
 	public Boolean selectPwd(String id, String password) {
-		if(password.equals(userMapper.selectPwd(id))){
+		if(password.equals(userDAO.selectPwd(id))){
 			return true;
 		} else {
 			return false;
@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserVO selectUserInfo(String id) {
-		return userMapper.selectUserInfo(id);
+		return userDAO.selectUserInfo(id);
 	}
 	
 }
