@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="User">
+
+	<resultMap type="userMap" id="UserVO">
+		<id property="id"			column="id"/>
+		<result property="password"	column="password"/>
+		<result property="name"		column="name"/>
+		<result property="email"	column="email"/>
+		<result property="sex"		column="sex"/>
+		<result property="phoneNum"	column="phone_num"/>
+	</resultMap>
+	
+	<select id="selectPwd" parameterType="String" resultType="String">
+		<![CDATA[ 
+			SELECT 
+				password
+			FROM 
+				t_user
+			WHERE
+				id = #{id}
+		]]>
+	</select>
+	
+	<select id="selectUserInfo" parameterType="String" resultMap="UserVO">
+		<![CDATA[ 
+			SELECT 
+				*
+			FROM 
+				t_user
+			WHERE
+				id = #{id}
+		]]>
+	</select>
+</mapper>
