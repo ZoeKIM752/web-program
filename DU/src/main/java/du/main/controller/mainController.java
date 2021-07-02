@@ -11,4 +11,9 @@ public class mainController {
 	public String mainPage() {
 		return "main.html";
 	}
+	
+	@RequestMapping("/login.do")
+	public String loginPage() {
+		return "login.html";
+	}
 }
