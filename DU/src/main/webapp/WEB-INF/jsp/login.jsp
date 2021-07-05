@@ -33,9 +33,9 @@
 			</table>
 			<br>
 			<div>
-				<button type="button">button</button>
-				<button type="submit">submit</button>
-				<button type="reset">reset</button>
+				<button type="button" onclick="window.location.href='signUpPage.do'">회원가입</button>
+				<button type="submit">로그인</button>
+				<button type="reset">초기화</button>
 			</div>
 		</fieldset>
 	</form>
