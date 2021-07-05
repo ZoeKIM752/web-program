@@ -2,32 +2,36 @@ package du.user.domain;
 
 public class UserVO {
 	
-	private String id;
+	private String userId;
 	
-	private String password;
+	private String pwd;
 	
 	private String name;
 	
+	private String deptCd;
+	
+	private String deptNm;
+	
+	private String job;
+	
+	private String phone;
+	
 	private String email;
-	
-	private String sex;
-	
-	private String phoneNum;
 
-	public String getId() {
-		return id;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPwd() {
+		return pwd;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
 
 	public String getName() {
@@ -38,6 +42,38 @@ public class UserVO {
 		this.name = name;
 	}
 
+	public String getDeptCd() {
+		return deptCd;
+	}
+
+	public void setDeptCd(String deptCd) {
+		this.deptCd = deptCd;
+	}
+
+	public String getDeptNm() {
+		return deptNm;
+	}
+
+	public void setDeptNm(String deptNm) {
+		this.deptNm = deptNm;
+	}
+
+	public String getJob() {
+		return job;
+	}
+
+	public void setJob(String job) {
+		this.job = job;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -46,20 +82,4 @@ public class UserVO {
 		this.email = email;
 	}
 
-	public String getSex() {
-		return sex;
-	}
-
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
-
-	public String getPhoneNum() {
-		return phoneNum;
-	}
-
-	public void setPhoneNum(String phoneNum) {
-		this.phoneNum = phoneNum;
-	}
-	
 }

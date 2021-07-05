@@ -3,33 +3,35 @@
 <mapper namespace="User">
 
 	<resultMap type="userMap" id="UserVO">
-		<id property="id"			column="id"/>
-		<result property="password"	column="password"/>
-		<result property="name"		column="name"/>
-		<result property="email"	column="email"/>
-		<result property="sex"		column="sex"/>
-		<result property="phoneNum"	column="phone_num"/>
+		<id property="userId"			column="user_id"/>
+		<result property="pwd"			column="pwd"/>
+		<result property="name"			column="name"/>
+		<result property="deptCd"		column="dept_cd"/>
+		<result property="deptNm"		column="dept_nm"/>
+		<result property="job"			column="job"/>
+		<result property="phone"		column="phone"/>
+		<result property="email"		column="email"/>
 	</resultMap>
 	
 	<select id="selectPwd" parameterType="String" resultType="String">
 		<![CDATA[ 
 			SELECT 
-				password
+				pwd
 			FROM 
-				t_user
+				tb_user
 			WHERE
-				id = #{id}
+				user_id = #{userId}
 		]]>
 	</select>
 	
 	<select id="selectUserInfo" parameterType="String" resultMap="UserVO">
 		<![CDATA[ 
 			SELECT 
-				*
+				A.user_id, A.name, B.dept_nm 
 			FROM 
-				t_user
+				TB_USER A INNER JOIN TB_DEPT_CD B ON A.dept_cd = B.dept_cd
 			WHERE
-				id = #{id}
+				user_id = #{userId}
 		]]>
 	</select>
 </mapper>

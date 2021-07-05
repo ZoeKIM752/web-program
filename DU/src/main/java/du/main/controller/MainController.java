@@ -17,7 +17,7 @@ public class MainController {
 	
 	@RequestMapping(value="/main.do", method = RequestMethod.POST)
 	public String mainPage(@ModelAttribute UserVO user) {
-		if(userService.selectPwd(user.getId(), user.getPassword())){
+		if(userService.selectPwd(user.getUserId(), user.getPwd())){
 			return "main.jsp";
 		} else {
 			return "login.jsp";
