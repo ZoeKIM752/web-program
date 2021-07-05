@@ -10,5 +10,7 @@
 </head>
 <body>
 	<h1>[<c:out value="${USER.name}"></c:out>]님 반갑습니다.</h1>
+	
+	<button type="button" style="float: right" onclick="window.location.href='logout.do'"> 로그아웃 </button>
 </body>
 </html>
