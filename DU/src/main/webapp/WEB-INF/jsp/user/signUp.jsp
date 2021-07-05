@@ -35,9 +35,9 @@
 					<th>부서*</th>
 					<td>
 						<select name="deptCd" required="required">
-							<option value="01">개발부</option>
-							<option value="02">영업부</option>
-							<option value="03">총무부</option>
+							<c:forEach items="${dept}" var="item">
+								<option value="${item.deptCd}"><c:out value="${item.deptNm}"/></option>
+							</c:forEach>
 						</select>
 					</td>
 				</tr>
