@@ -25,7 +25,7 @@
 	<select id="selectBoardListCnt" resultType="int">
 		<![CDATA[ 
 			SELECT
-				count(*) AS listCnt
+				count(*)
 			FROM
 				tb_board
 		]]>
