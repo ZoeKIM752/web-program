@@ -59,7 +59,7 @@
 		
 		<button type="button" onclick="window.history.back()">이전</button>
 		<button type="button" id="okBtn">수정</button>
-		<button type="button" onclick="window.location.href='userDelete.do'">회원탈퇴</button>
+		<button type="button" id="delBtn">회원탈퇴</button>
 	</form>
 </body>
 
@@ -68,6 +68,7 @@
 	window.onload = function(){
 		
 		var okBtn = document.getElementById("okBtn");
+		var delBtn = document.getElementById("delBtn");
 		
 		okBtn.onclick = function() {
 			var pwd = document.getElementById("pwdInput").value;
@@ -77,6 +78,15 @@
 				document.getElementById("userInfoForm").submit();
 			} else {
 				alert("비밀번호를 확인해주세요.");
+			}
+		}
+		
+		delBtn.onclick = function() {
+			var del = confirm("정말로 탈퇴하시겠습니까?");
+			if(del) {
+				window.location.href='userDelete.do';
+			} else {
+				return false;
 			}
 		}
 	} 
