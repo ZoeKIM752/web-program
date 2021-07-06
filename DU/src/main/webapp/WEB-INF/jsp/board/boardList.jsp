@@ -73,7 +73,7 @@
 					<tr>
 						<td><c:out value="${item.idx}"/></td>
 						<td><c:out value="${item.title}"/></td>
-						<td><c:out value="${item.writerId}"/></td>
+						<td><c:out value="${item.writerName}"/></td>
 						<td><c:out value="${item.registDate}"/></td>
 					</tr>
 				</c:forEach>

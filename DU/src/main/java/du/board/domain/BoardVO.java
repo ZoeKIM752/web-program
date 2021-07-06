@@ -12,6 +12,8 @@ public class BoardVO {
 	
 	private String writerId;
 	
+	private String writerName;
+	
 	private LocalDateTime registDate;
 	
 	private LocalDateTime modifyDate;
@@ -46,6 +48,14 @@ public class BoardVO {
 
 	public void setWriterId(String writerId) {
 		this.writerId = writerId;
+	}
+
+	public String getWriterName() {
+		return writerName;
+	}
+
+	public void setWriterName(String writerName) {
+		this.writerName = writerName;
 	}
 
 	public LocalDateTime getRegistDate() {
