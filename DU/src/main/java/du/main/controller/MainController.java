@@ -12,7 +12,7 @@ public class MainController {
 		return "main.html";
 	}
 	
-	@RequestMapping("/login.do")
+	@RequestMapping("/loginPage.do")
 	public String loginPage() {
 		return "login.html";
 	}
