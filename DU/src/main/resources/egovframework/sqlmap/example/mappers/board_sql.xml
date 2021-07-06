@@ -18,6 +18,16 @@
 				A.*, B.name AS writer_name
 			FROM 
 				tb_board A INNER JOIN tb_user B ON A.writer_id = B.user_id
+			LIMIT #{startList}, #{listSize}
+		]]>
+	</select>
+	
+	<select id="selectBoardListCnt" resultType="int">
+		<![CDATA[ 
+			SELECT
+				count(*) AS listCnt
+			FROM
+				tb_board
 		]]>
 	</select>
 	

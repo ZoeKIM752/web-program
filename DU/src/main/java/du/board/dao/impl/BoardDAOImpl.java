@@ -6,14 +6,20 @@ import org.springframework.stereotype.Repository;
 
 import du.board.dao.BoardDAO;
 import du.board.domain.BoardVO;
+import du.common.Pagination;
 import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
 
 @Repository
 public class BoardDAOImpl extends EgovAbstractMapper implements BoardDAO {
 
 	@Override
-	public List<BoardVO> selectBoardList() {
-		return selectList("Board.selectBoardList");
+	public List<BoardVO> selectBoardList(Pagination pagination) {
+		return selectList("Board.selectBoardList", pagination);
+	}
+
+	@Override
+	public int selectBoardListCnt() {
+		return selectOne("Board.selectBoardListCnt");
 	}
 
 }
