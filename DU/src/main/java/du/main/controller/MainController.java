@@ -15,7 +15,7 @@ public class MainController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value="/main.do", method = RequestMethod.POST)
+	@RequestMapping(value="/login.do", method = RequestMethod.POST)
 	public String mainPage(@ModelAttribute UserVO user) {
 		if(userService.selectPwd(user.getUserId(), user.getPwd())){
 			return "main.jsp";
