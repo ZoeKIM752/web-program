@@ -52,14 +52,14 @@ public class UserController {
 	public String signUp(@ModelAttribute UserVO user) {
 		userService.insertUser(user);
 		
-		return "redirect:/login.do";
+		return "redirect:/loginPage.do";
 	}
 
 	@RequestMapping("/userDelete.do")
 	public String userDelete(HttpSession session) {
 		userService.deleteUser(session);
 		
-		return "redirect:/login.do";
+		return "redirect:/loginPage.do";
 	}
 	
 }
