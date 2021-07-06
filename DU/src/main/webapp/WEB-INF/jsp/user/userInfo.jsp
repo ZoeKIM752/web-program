@@ -82,7 +82,7 @@
 		}
 		
 		delBtn.onclick = function() {
-			var del = confirm("정말로 탈퇴하시겠습니까?");
+			var del = confirm("탈퇴하시겠습니까?");
 			if(del) {
 				window.location.href='userDelete.do';
 			} else {
