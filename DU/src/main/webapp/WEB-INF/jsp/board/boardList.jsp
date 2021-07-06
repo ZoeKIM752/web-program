@@ -29,6 +29,10 @@
 			margin-right: auto; 
 			display: block;
 		}
+		#paginationBox {
+		    justify-content: center;
+		    display: flex;
+		}
 	</style>
 	<title>Main Page</title>
 </head>
@@ -81,7 +85,7 @@
 		</table>
 		
 		<!-- pagination{s} -->
-		<div id="paginationBox">
+		<div id="paginationBox" >
 			<ul class="pagination">
 				<c:if test="${pagination.prev}">
 					<li class="page-item"><a class="page-link" href="#" onClick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}')">Previous</a></li>
