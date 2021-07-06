@@ -18,7 +18,7 @@ public class MainController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value="/main.do", method = RequestMethod.POST)
+	@RequestMapping(value="/login.do", method = RequestMethod.POST)
 	public String mainPage(HttpServletRequest request, @ModelAttribute UserVO user) {
 		
 		if(userService.loginProcess(request, user)){
