@@ -18,7 +18,7 @@
 	<div>
 		<h1>Login Page</h1>
 	</div>
-	<form action="main.do" method="post">
+	<form action="login.do" method="post">
 		<fieldset>
 			<legend>Login</legend>
 			<table>
