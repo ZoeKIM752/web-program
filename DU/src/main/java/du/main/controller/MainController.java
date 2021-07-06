@@ -24,7 +24,7 @@ public class MainController {
 		}
 	}
 	
-	@RequestMapping("/login.do")
+	@RequestMapping("/loginPage.do")
 	public String loginPage() {
 		return "login.jsp";
 	}
