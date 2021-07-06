@@ -69,48 +69,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>1</td>
-					<td>게시판 등록 1</td>
-					<td>홍길동</td>
-					<td>2021-06-10 01:13</td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td>게시판 등록 2</td>
-					<td>임꺽정</td>
-					<td>2021-06-30 18:16</td>
-				</tr>
-				<tr>
-					<td>3</td>
-					<td>게시판 등록 3</td>
-					<td>장길산</td>
-					<td>2021-07-01 10:13</td>
-				</tr>
-				<tr>
-					<td>4</td>
-					<td>게시판 등록 4</td>
-					<td>이상해</td>
-					<td>2021-07-03 12:43</td>
-				</tr>
-				<tr>
-					<td>5</td>
-					<td>게시판 등록 5</td>
-					<td>홍길동</td>
-					<td>2021-07-04 08:06</td>
-				</tr>
-				<tr>
-					<td>6</td>
-					<td>게시판 등록 6</td>
-					<td>이상해</td>
-					<td>2021-07-04 15:52</td>
-				</tr>
-				<tr>
-					<td>7</td>
-					<td>게시판 등록 7</td>
-					<td>장발장</td>
-					<td>2021-07-14 16:07</td>
-				</tr>
+				<c:forEach items="${boardList}" var="item">
+					<tr>
+						<td><c:out value="${item.idx}"/></td>
+						<td><c:out value="${item.title}"/></td>
+						<td><c:out value="${item.writerId}"/></td>
+						<td><c:out value="${item.registDate}"/></td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 	</section>
