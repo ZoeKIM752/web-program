@@ -56,6 +56,17 @@
 		</div>
 	</header>
 	<section>
+		
+		<div id="filterDiv">
+			<table>
+				<tr>
+					<th>제목</th>
+					<td><input type="text" id="searchTitle"/></td>
+					<td><button type="button" class="btn btn-primary" id="searchBtn">검색 </button></td>
+				</tr>
+			</table>
+		</div>
+		
 		<table class="table table-striped">
 			<colgroup>  
 			    <col style="width:5%">    	
@@ -107,7 +118,20 @@
 </body>
 
 <script>
-
+	
+	var searchBtn = document.getElementById("searchBtn");
+	var searchTitle = document.getElementById("searchTitle");
+	
+	searchTitle.addEventListener("keyup", function(event) {
+	    if (event.keyCode === 13) {
+	    	searchBtn.click();
+	    }
+	});
+	
+	searchBtn.onclick = function() {
+		console.log(searchTitle.value);
+	}
+	
 	//이전 버튼 이벤트
 	function fn_prev(page, range, rangeSize) {
 		var page = ((range - 2) * rangeSize) + 1;
