@@ -67,7 +67,7 @@
 			</table>
 		</div>
 		
-		<table class="table table-striped">
+		<table id="dataList" class="table table-striped">
 			<colgroup>  
 			    <col style="width:5%">    	
 		        <col style="width:65%">
@@ -129,7 +129,19 @@
 	});
 	
 	searchBtn.onclick = function() {
-		console.log(searchTitle.value);
+		var table = document.getElementById("dataList");
+		var tbody = table.getElementsByTagName("tbody")[0];
+		var tr = tbody.getElementsByTagName("tr");
+		
+		for (var item of tr) {
+		    var title = item.getElementsByTagName("td")[1].innerHTML;
+			
+			if(title.includes(searchTitle.value)){
+				item.style.display = '';
+			} else {
+				item.style.display = 'none';
+			}
+		}
 	}
 	
 	//이전 버튼 이벤트
