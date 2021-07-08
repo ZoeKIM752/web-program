@@ -37,7 +37,11 @@
 					<td>
 						<select name="deptCd">
 							<c:forEach items="${dept}" var="item">
-								<option value="${item.deptCd}"><c:out value="${item.deptNm}"/></option>
+								<option value="${item.deptCd}"
+									<c:if test="${item.deptCd == USER.deptCd }">
+										selected
+									</c:if>
+								><c:out value="${item.deptNm}"/></option>
 							</c:forEach>
 						</select>
 					</td>
