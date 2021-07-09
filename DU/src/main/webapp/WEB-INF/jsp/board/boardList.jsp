@@ -123,35 +123,38 @@
 </body>
 
 <script>
-	
-	var searchBtn = document.getElementById("searchBtn");
-	var searchTitle = document.getElementById("searchTitle");
-	
-	searchTitle.addEventListener("keyup", function(event) {
-	    if (event.keyCode === 13) {
-	    	searchBtn.click();
-	    }
-	});
-	
-	searchBtn.onclick = function() {
-// 		var table = document.getElementById("dataList");
-// 		var tbody = table.getElementsByTagName("tbody")[0];
-// 		var tr = tbody.getElementsByTagName("tr");
+
+	window.onload = function(){
+
+		var searchBtn = document.getElementById("searchBtn");
+		var searchTitle = document.getElementById("searchTitle");
 		
-// 		for (var item of tr) {
-// 		    var title = item.getElementsByTagName("td")[1].innerHTML;
+		searchTitle.addEventListener("keyup", function(event) {
+		    if (event.keyCode === 13) {
+		    	searchBtn.click();
+		    }
+		});
+		
+		searchBtn.onclick = function() {
+//	 		var table = document.getElementById("dataList");
+//	 		var tbody = table.getElementsByTagName("tbody")[0];
+//	 		var tr = tbody.getElementsByTagName("tr");
 			
-// 			if(title.includes(searchTitle.value)){
-// 				item.style.display = '';
-// 			} else {
-// 				item.style.display = 'none';
-// 			}
-// 		}
+//	 		for (var item of tr) {
+//	 		    var title = item.getElementsByTagName("td")[1].innerHTML;
+				
+//	 			if(title.includes(searchTitle.value)){
+//	 				item.style.display = '';
+//	 			} else {
+//	 				item.style.display = 'none';
+//	 			}
+//	 		}
 
-		var url = "boardListPage.do";
-		url = url + "?title=" + searchTitle.value;
+			var url = "boardListPage.do";
+			url = url + "?title=" + searchTitle.value;
 
-		location.href = url;
+			location.href = url;
+		}
 	}
 	
 	//이전 버튼 이벤트
