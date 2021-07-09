@@ -121,7 +121,7 @@ public class Pagination {
 		this.listCnt = listCnt;
 		
 		//total page cnt
-		this.pageCnt = (int) Math.ceil(listCnt/listSize);
+		this.pageCnt = (int) Math.ceil((float)listCnt/listSize);
 		
 		//start page
 		this.startPage = (range - 1) * rangeSize + 1;
