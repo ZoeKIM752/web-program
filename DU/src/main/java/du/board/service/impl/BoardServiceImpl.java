@@ -38,6 +38,11 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	public BoardVO selectBoard(long idx) {
+		return boardDAO.selectBoard(idx);
+	}
+
+	@Override
 	public void insertBoard(BoardVO board, HttpSession session) {
 		UserVO user = (UserVO) session.getAttribute("USER");
 		

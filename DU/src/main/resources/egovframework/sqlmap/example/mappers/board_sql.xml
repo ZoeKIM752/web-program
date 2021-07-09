@@ -29,6 +29,17 @@
 		]]>
 	</select>
 	
+	<select id="selectBoard" parameterType="long" resultMap="BoardVO">
+		<![CDATA[ 
+			SELECT 
+				A.*, B.name AS writer_name
+			FROM 
+				tb_board A INNER JOIN tb_user B ON A.writer_id = B.user_id
+			WHERE
+				A.idx = #{idx}
+		]]>
+	</select>
+	
 	<select id="selectBoardListCnt" parameterType="String" resultType="int">
 		<![CDATA[ 
 			SELECT

@@ -72,7 +72,7 @@
 			<button type="button" class="btn btn-success" onclick="window.location.href='boardWritePage.do'">게시글 등록</button>
 		</div>
 		
-		<table id="dataList" class="table table-striped">
+		<table id="dataList" class="table table-striped table-hover">
 			<colgroup>  
 			    <col style="width:5%">    	
 		        <col style="width:65%">
@@ -89,9 +89,9 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${boardList}" var="item">
-					<tr>
-						<td><c:out value="${item.idx}"/></td>
+				<c:forEach items="${boardList}" var="item" varStatus="status">
+					<tr ondblclick="trDblClickEvent('${item.idx}')">
+						<td><c:out value="${status.count + pagination.startList}"/></td>
 						<td><c:out value="${item.title}"/></td>
 						<td><c:out value="${item.writerName}"/></td>
 						<td><c:out value="${item.registDate}"/></td>
@@ -136,25 +136,18 @@
 		});
 		
 		searchBtn.onclick = function() {
-//	 		var table = document.getElementById("dataList");
-//	 		var tbody = table.getElementsByTagName("tbody")[0];
-//	 		var tr = tbody.getElementsByTagName("tr");
-			
-//	 		for (var item of tr) {
-//	 		    var title = item.getElementsByTagName("td")[1].innerHTML;
-				
-//	 			if(title.includes(searchTitle.value)){
-//	 				item.style.display = '';
-//	 			} else {
-//	 				item.style.display = 'none';
-//	 			}
-//	 		}
-
 			var url = "boardListPage.do";
 			url = url + "?title=" + searchTitle.value;
 
 			location.href = url;
 		}
+	}
+	
+	//tr 클릭 이벤트
+	function trDblClickEvent(idx){
+		var url = "boardInfoPage/"+idx+".do";
+
+		location.href = url;
 	}
 	
 	//이전 버튼 이벤트
