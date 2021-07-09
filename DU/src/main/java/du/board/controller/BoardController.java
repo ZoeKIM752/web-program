@@ -21,18 +21,21 @@ public class BoardController {
 	@RequestMapping("/boardListPage.do")
 	public ModelAndView boardListPage(
 			@RequestParam(required = false, defaultValue = "1") int page,
-			@RequestParam(required = false, defaultValue = "1") int range) {
+			@RequestParam(required = false, defaultValue = "1") int range,
+			@RequestParam(required = false, defaultValue = "") String title) {
 		
 		ModelAndView mav = new ModelAndView("board/boardList.jsp");
 		
-		int listCnt = boardService.selectBoardListCnt();
+		int listCnt = boardService.selectBoardListCnt(title);
 		
 		Pagination pagination = new Pagination();
 		pagination.pageInfo(page, range, listCnt);
 		mav.addObject("pagination", pagination);
 		
-		List<BoardVO> boardList = boardService.selectBoardList(pagination);
+		List<BoardVO> boardList = boardService.selectBoardList(pagination, title);
 		mav.addObject("boardList", boardList);
+		
+		mav.addObject("title", title);
 		
 		return mav;
 	}

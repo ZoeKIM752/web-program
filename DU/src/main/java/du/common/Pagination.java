@@ -2,9 +2,9 @@ package du.common;
 
 public class Pagination {
 	
-	private int listSize = 10;
+	private int listSize = 2;
 	
-	private int rangeSize = 5;
+	private int rangeSize = 2;
 	
 	//현재 페이지
 	private int page;

@@ -61,7 +61,8 @@
 			<table>
 				<tr>
 					<th>제목</th>
-					<td><input type="text" id="searchTitle"/></td>
+					<td><input type="text" id="searchTitle"
+							value="<c:out value='${title }'></c:out>"/></td>
 					<td><button type="button" class="btn btn-primary" id="searchBtn">검색 </button></td>
 				</tr>
 			</table>
@@ -129,19 +130,24 @@
 	});
 	
 	searchBtn.onclick = function() {
-		var table = document.getElementById("dataList");
-		var tbody = table.getElementsByTagName("tbody")[0];
-		var tr = tbody.getElementsByTagName("tr");
+// 		var table = document.getElementById("dataList");
+// 		var tbody = table.getElementsByTagName("tbody")[0];
+// 		var tr = tbody.getElementsByTagName("tr");
 		
-		for (var item of tr) {
-		    var title = item.getElementsByTagName("td")[1].innerHTML;
+// 		for (var item of tr) {
+// 		    var title = item.getElementsByTagName("td")[1].innerHTML;
 			
-			if(title.includes(searchTitle.value)){
-				item.style.display = '';
-			} else {
-				item.style.display = 'none';
-			}
-		}
+// 			if(title.includes(searchTitle.value)){
+// 				item.style.display = '';
+// 			} else {
+// 				item.style.display = 'none';
+// 			}
+// 		}
+
+		var url = "boardListPage.do";
+		url = url + "?title=" + searchTitle.value;
+
+		location.href = url;
 	}
 	
 	//이전 버튼 이벤트
@@ -152,6 +158,7 @@
 		var url = "boardListPage.do";
 		url = url + "?page=" + page;
 		url = url + "&range=" + range;
+		url = url + "&title=" + searchTitle.value;
 
 		location.href = url;
 	}
@@ -161,6 +168,7 @@
 		var url = "boardListPage.do";
 		url = url + "?page=" + page;
 		url = url + "&range=" + range;
+		url = url + "&title=" + searchTitle.value;
 
 		location.href = url;	
 	}
@@ -173,6 +181,7 @@
 		var url = "boardListPage.do";
 		url = url + "?page=" + page;
 		url = url + "&range=" + range;
+		url = url + "&title=" + searchTitle.value;
 
 		location.href = url;
 	}

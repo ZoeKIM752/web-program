@@ -1,5 +1,6 @@
 package du.board.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,21 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDAO boardDAO;
 	
 	@Override
-	public List<BoardVO> selectBoardList(Pagination pagination) {
-		return boardDAO.selectBoardList(pagination);
+	public List<BoardVO> selectBoardList(Pagination pagination, String title) {
+		
+		HashMap<String, Object> map = new HashMap<>();
+		
+		map.put("startList", pagination.getStartList());
+		map.put("listSize", pagination.getListSize());
+		map.put("title", "%" + title + "%");
+		
+		return boardDAO.selectBoardList(map);
 	}
 
 	@Override
-	public int selectBoardListCnt() {
-		return boardDAO.selectBoardListCnt();
+	public int selectBoardListCnt(String title) {
+		title = "%" + title + "%";
+		return boardDAO.selectBoardListCnt(title);
 	}
 	
 }
