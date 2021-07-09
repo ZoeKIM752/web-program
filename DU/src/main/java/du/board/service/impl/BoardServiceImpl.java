@@ -24,14 +24,13 @@ public class BoardServiceImpl implements BoardService {
 		
 		map.put("startList", pagination.getStartList());
 		map.put("listSize", pagination.getListSize());
-		map.put("title", "%" + title + "%");
+		map.put("title", title);
 		
 		return boardDAO.selectBoardList(map);
 	}
 
 	@Override
 	public int selectBoardListCnt(String title) {
-		title = "%" + title + "%";
 		return boardDAO.selectBoardListCnt(title);
 	}
 	

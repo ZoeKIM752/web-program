@@ -18,7 +18,13 @@
 				A.*, B.name AS writer_name
 			FROM 
 				tb_board A INNER JOIN tb_user B ON A.writer_id = B.user_id
-			WHERE title LIKE #{title}
+		]]>
+		<where>
+			<if test="title != ''">
+				A.title LIKE CONCAT('%', #{title}, '%')
+			</if>
+		</where>
+		<![CDATA[ 
 			LIMIT #{startList}, #{listSize}
 		]]>
 	</select>
@@ -29,8 +35,12 @@
 				count(*)
 			FROM
 				tb_board
-			WHERE title LIKE #{title}
 		]]>
+		<where>
+			<if test="value != ''">
+				title LIKE CONCAT('%', #{value}, '%')
+			</if>
+		</where>
 	</select>
 	
 </mapper>
