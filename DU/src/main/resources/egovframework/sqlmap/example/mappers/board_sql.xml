@@ -43,4 +43,13 @@
 		</where>
 	</select>
 	
+	<insert id="insertBoard" parameterType="boardMap">
+		<![CDATA[ 
+			INSERT INTO tb_board
+				(title, content, writer_id)
+			VALUE 
+				(#{title}, #{content}, #{writerId})
+		]]>
+	</insert>
+	
 </mapper>

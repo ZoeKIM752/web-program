@@ -22,4 +22,9 @@ public class BoardDAOImpl extends EgovAbstractMapper implements BoardDAO {
 		return selectOne("Board.selectBoardListCnt", title);
 	}
 
+	@Override
+	public void insertBoard(BoardVO board) {
+		insert("Board.insertBoard", board);
+	}
+
 }

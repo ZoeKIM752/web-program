@@ -33,6 +33,10 @@
 		    justify-content: center;
 		    display: flex;
 		}
+		#filterDiv{
+			display: flex;
+    		justify-content: space-between;
+		}
 	</style>
 	<title>Main Page</title>
 </head>
@@ -56,7 +60,6 @@
 		</div>
 	</header>
 	<section>
-		
 		<div id="filterDiv">
 			<table>
 				<tr>
@@ -66,6 +69,7 @@
 					<td><button type="button" class="btn btn-primary" id="searchBtn">검색 </button></td>
 				</tr>
 			</table>
+			<button type="button" class="btn btn-success" onclick="window.location.href='boardWritePage.do'">게시글 등록</button>
 		</div>
 		
 		<table id="dataList" class="table table-striped">
