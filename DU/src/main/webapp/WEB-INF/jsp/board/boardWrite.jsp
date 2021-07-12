@@ -53,10 +53,10 @@
 	</header>
 	<section>
 		<form action="boardWrite.do" method="post">
-			<table>
+			<table class="table table-light" style="width: 50%;">
 				<tr>
 					<th>제목</th>
-					<td><input type="text" name="title" required/></td>
+					<td><input type="text" name="title" style="width: 100%;" required/></td>
 				</tr>
 				<tr>
 					<th>내용</th>

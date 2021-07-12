@@ -16,4 +16,7 @@ public interface BoardService {
 	public BoardVO selectBoard(long idx);
 
 	public void insertBoard(BoardVO board, HttpSession session);
+
+	public void deleteBoard(long idx);
+	
 }
