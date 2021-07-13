@@ -47,7 +47,7 @@
 			<h1>[<c:out value="${USER.name}"></c:out>]님 반갑습니다.</h1>
 			
 			<div class="rightBtnDiv">
-				<button type="button" class="btn btn-primary" style="margin-rigth: 3px;" onclick="window.location.href='userInfo.do'"> 
+				<button type="button" class="btn btn-primary" style="margin-rigth: 3px;" onclick="window.location.href='userInfoConfirm.do'"> 
 					회원정보 </button>
 					
 				<button type="button" class="btn btn-secondary" onclick="window.location.href='logout.do'"> 
