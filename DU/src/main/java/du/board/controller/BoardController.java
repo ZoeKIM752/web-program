@@ -1,7 +1,10 @@
 package du.board.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,11 +72,44 @@ public class BoardController {
 		return mav;
 	}
 	
-	@RequestMapping("/boardDelete/{idx}.do")
-	public String boardDelete(@PathVariable("idx") long idx) {
+	@RequestMapping("/boardDelete.do")
+	public String boardDelete(long idx) {
 		boardService.deleteBoard(idx);
 		
 		return "redirect:/boardListPage.do";
+	}
+	
+	@RequestMapping("/boardModifyPage/{idx}.do")
+	public ModelAndView boardModifyPage(HttpSession session, HttpServletResponse response, @PathVariable("idx") long idx) {
+		
+		BoardVO board = boardService.selectBoard(idx);
+		UserVO user = (UserVO) session.getAttribute("USER");
+		
+		if(user != null && board.getWriterId().equals(user.getUserId())){
+			ModelAndView mav = new ModelAndView("board/boardModify.jsp");
+			mav.addObject("board", board);
+			
+			return mav;
+		} else {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out;
+			try {
+				out = response.getWriter();
+				out.println("<script>alert('권한이 없습니다.'); history.back();</script>");
+				out.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
+	
+	@RequestMapping("/boardModify.do")
+	public String boardModify(@ModelAttribute BoardVO board) {
+		boardService.updateBoard(board);
+
+		return "redirect:/boardInfoPage/"+Long.toString(board.getIdx())+".do";
 	}
 	
 }

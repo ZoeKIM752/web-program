@@ -56,17 +56,23 @@
 			<tr>
 				<th>제목</th>
 				<td><c:out value="${board.title }"></c:out></td>
+				<th style="width: 10%">작성자</th>
+				<td style="width: 10%"><c:out value="${board.writerName }"></c:out></td>
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td style="width: 90%; height: 100px;"><c:out value="${board.content }"></c:out></td>
+				<td colspan="3" style="width: 90%; height: 100px;"><c:out value="${board.content }"></c:out></td>
 			</tr>
 		</table>
 		<button type="button" class="btn btn-secondary" onclick="history.back(); return false;"> 
 			이전 </button>
-		<button type="button" class="btn btn-secondary" id="deleteBtn">삭제</button>
-		<button type="button" class="btn btn-primary" onclick="window.location.href='${pageContext.request.contextPath}/userInfo.do'"> 
-			수정 </button>
+			
+		<c:if test="${board.writerId == USER.userId }">
+			<button type="button" class="btn btn-secondary" id="deleteBtn">삭제</button>
+			<button type="button" class="btn btn-primary" 
+				onclick="window.location.href='${pageContext.request.contextPath}/boardModifyPage/${board.idx }.do'"> 
+				수정 </button>
+		</c:if>
 	</section>
 </body>
 
@@ -78,7 +84,11 @@
 		
 		deleteBtn.onclick = function() {
 			if(confirm("삭제하시겠습니까?") == true){
-				location.href = "${pageContext.request.contextPath}/boardDelete/${board.idx}.do";
+				var path = "${pageContext.request.contextPath}/boardDelete.do";
+				var params = {
+						"idx": "${board.idx}"
+				};
+				post(path, params);
 			}
 			else{
 				return;
@@ -87,5 +97,25 @@
 		
 	}
 	
+	function post(path, params) {
+		
+		const form = document.createElement('form');
+		form.method = "post";
+		form.action = path;
+		
+		for (const key in params) {
+		  if (params.hasOwnProperty(key)) {
+		    const hiddenField = document.createElement('input');
+		    hiddenField.type = 'hidden';
+		    hiddenField.name = key;
+		    hiddenField.value = params[key];
+		    form.appendChild(hiddenField);
+		  }
+		}
+		
+		document.body.appendChild(form);
+		form.submit();
+	}
+
 </script>
 </html>

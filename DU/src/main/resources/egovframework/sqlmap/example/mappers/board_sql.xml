@@ -71,4 +71,16 @@
 		]]>
 	</delete>
 	
+	<update id="updateBoard" parameterType="boardMap">
+		<![CDATA[ 
+			UPDATE tb_board
+			SET
+				title = #{title},
+				content = #{content},
+				modify_date = NOW()
+			WHERE
+				idx = #{idx}
+		]]>
+	</update>
+	
 </mapper>
