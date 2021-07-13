@@ -14,7 +14,7 @@
 	<button type="button" style="float: right" onclick="window.location.href='logout.do'"> 
 		로그아웃 </button>
 	
-	<button type="button" style="float: right" onclick="window.location.href='userInfo.do'"> 
+	<button type="button" style="float: right" onclick="window.location.href='userInfoConfirm.do'"> 
 		회원정보 </button>
 </body>
 </html>
