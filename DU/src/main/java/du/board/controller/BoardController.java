@@ -1,10 +1,7 @@
 package du.board.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,31 +75,15 @@ public class BoardController {
 		
 		return "redirect:/boardListPage.do";
 	}
-	
-	@RequestMapping("/boardModifyPage/{idx}.do")
-	public ModelAndView boardModifyPage(HttpSession session, HttpServletResponse response, @PathVariable("idx") long idx) {
+
+	@RequestMapping("/boardModifyPage.do")
+	public ModelAndView boardModifyPage(long idx) {
+		ModelAndView mav = new ModelAndView("board/boardModify.jsp");
 		
 		BoardVO board = boardService.selectBoard(idx);
-		UserVO user = (UserVO) session.getAttribute("USER");
+		mav.addObject("board", board);
 		
-		if(user != null && board.getWriterId().equals(user.getUserId())){
-			ModelAndView mav = new ModelAndView("board/boardModify.jsp");
-			mav.addObject("board", board);
-			
-			return mav;
-		} else {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out;
-			try {
-				out = response.getWriter();
-				out.println("<script>alert('권한이 없습니다.'); history.back();</script>");
-				out.flush();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}
+		return mav;
 	}
 	
 	@RequestMapping("/boardModify.do")
