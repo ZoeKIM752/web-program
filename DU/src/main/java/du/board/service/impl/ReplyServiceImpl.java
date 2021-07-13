@@ -1,5 +1,7 @@
 package du.board.service.impl;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,11 @@ public class ReplyServiceImpl implements ReplyService {
 
 	@Autowired
 	private ReplyDAO replyDAO;
+
+	@Override
+	public List<ReplyVO> selectReplyList(long boardIdx) {
+		return replyDAO.selectReplyList(boardIdx);
+	}
 	
 	@Override
 	public void insertReply(HttpSession session, ReplyVO reply) {
