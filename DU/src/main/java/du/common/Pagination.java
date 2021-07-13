@@ -137,7 +137,7 @@ public class Pagination {
 		
 		//next state
 		this.next = endPage > pageCnt ? false : true;
-		if(endPage > pageCnt) {
+		if(endPage >= pageCnt) {
 			this.endPage = this.pageCnt;
 			this.next = false;
 		}
