@@ -40,6 +40,11 @@ public class ReplyServiceImpl implements ReplyService {
 	}
 
 	@Override
+	public void deleteAllReply(long boardIdx) {
+		replyDAO.deleteAllReply(boardIdx);
+	}
+
+	@Override
 	public void updateReply(ReplyVO reply) {
 		replyDAO.updateReply(reply);
 	}

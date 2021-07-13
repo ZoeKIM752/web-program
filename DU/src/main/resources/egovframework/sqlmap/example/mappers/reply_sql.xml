@@ -39,6 +39,14 @@
 				idx = #{idx}
 		]]>
 	</delete>
+		
+	<delete id="deleteAllReply" parameterType="long">
+		<![CDATA[ 
+			DELETE FROM tb_reply
+			WHERE
+				board_idx = #{boardIdx}
+		]]>
+	</delete>
 	
 	<update id="updateReply" parameterType="replyMap">
 		<![CDATA[ 

@@ -80,6 +80,7 @@ public class BoardController {
 	@RequestMapping("/boardDelete.do")
 	public String boardDelete(long idx) {
 		boardService.deleteBoard(idx);
+		replyService.deleteAllReply(idx);
 		
 		return "redirect:/boardListPage.do";
 	}

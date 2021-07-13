@@ -12,6 +12,8 @@ public interface ReplyDAO {
 
 	public void deleteReply(long idx);
 
+	public void deleteAllReply(long boardIdx);
+
 	public void updateReply(ReplyVO reply);
 
 }
