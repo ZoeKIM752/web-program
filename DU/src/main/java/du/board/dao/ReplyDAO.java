@@ -10,4 +10,6 @@ public interface ReplyDAO {
 
 	public void insertReply(ReplyVO reply);
 
+	public void deleteReply(long idx);
+
 }

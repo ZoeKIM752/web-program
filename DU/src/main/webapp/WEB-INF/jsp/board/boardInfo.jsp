@@ -88,7 +88,10 @@
 							<th style="width: 10%"><c:out value="${item.writerName }"></c:out></th>
 							<td><c:out value="${item.content }"></c:out>
 								<fmt:parseDate value="${item.registDate }" pattern="yyyy-MM-dd'T'HH:mm:ss" var="date"/>
-								(<fmt:formatDate value="${date }" pattern="yyyy-MM-dd HH:mm:ss"/>)</td>
+								<button type="button" style="float: right;" class="btn btn-secondary" 
+									onclick="deleteReply('${item.idx}')">삭제</button>	
+								<br>(<fmt:formatDate value="${date }" pattern="yyyy-MM-dd HH:mm:ss"/>)
+							</td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -127,6 +130,20 @@
 			post(path, params);
 		}
 		
+	}
+	
+	function deleteReply(idx){
+		if(confirm("댓글을 삭제하시겠습니까?") == true){
+			var path = "${pageContext.request.contextPath}/replyDelete.do";
+			var params = {
+					"idx": idx,
+					"boardIdx": "${board.idx}"
+			};
+			post(path, params);
+		}
+		else{
+			return;
+		}
 	}
 	
 	function post(path, params) {

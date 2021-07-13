@@ -11,5 +11,7 @@ public interface ReplyService {
 	public List<ReplyVO> selectReplyList(long boardIdx);
 
 	public void insertReply(HttpSession session, ReplyVO reply);
+
+	public void deleteReply(long idx);
 	
 }

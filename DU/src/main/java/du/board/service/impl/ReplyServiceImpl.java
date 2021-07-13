@@ -33,5 +33,10 @@ public class ReplyServiceImpl implements ReplyService {
 			replyDAO.insertReply(reply);
 		}
 	}
+
+	@Override
+	public void deleteReply(long idx) {
+		replyDAO.deleteReply(idx);
+	}
 	
 }

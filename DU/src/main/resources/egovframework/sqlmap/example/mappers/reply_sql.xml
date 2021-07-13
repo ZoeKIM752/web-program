@@ -31,5 +31,13 @@
 				(#{boardIdx}, #{content}, #{writerId})
 		]]>
 	</insert>
+		
+	<delete id="deleteReply" parameterType="long">
+		<![CDATA[ 
+			DELETE FROM tb_reply
+			WHERE
+				idx = #{idx}
+		]]>
+	</delete>
 	
 </mapper>

@@ -22,4 +22,11 @@ public class ReplyController {
 		
 		return "redirect:/boardInfoPage/"+Long.toString(reply.getBoardIdx())+".do";
 	}
+	
+	@RequestMapping("/replyDelete.do")
+	public String replyDelete(long idx, String boardIdx) {
+		replyService.deleteReply(idx);
+		
+		return "redirect:/boardInfoPage/"+boardIdx+".do";
+	}
 }
