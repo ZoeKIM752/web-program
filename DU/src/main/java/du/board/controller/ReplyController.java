@@ -29,4 +29,11 @@ public class ReplyController {
 		
 		return "redirect:/boardInfoPage/"+boardIdx+".do";
 	}
+	
+	@RequestMapping("/replyModify.do")
+	public String replyModify(@ModelAttribute ReplyVO reply) {
+		replyService.updateReply(reply);
+		
+		return "redirect:/boardInfoPage/"+Long.toString(reply.getBoardIdx())+".do";
+	}
 }

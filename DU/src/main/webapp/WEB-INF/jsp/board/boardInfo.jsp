@@ -79,17 +79,20 @@
 					<tr>
 						<th style="width: 10%">댓글</th>
 						<td>
-							<input type="text" name="content" style="width: 90%"/>
+							<input type="text" name="content" style="width: 90%" required/>
 							<button type="submit" class="btn btn-success">등록</button>
 						</td>
 					</tr>
 					<c:forEach items="${replyList}" var="item" varStatus="status">
 						<tr>
 							<th style="width: 10%"><c:out value="${item.writerName }"></c:out></th>
-							<td><c:out value="${item.content }"></c:out>
-								<fmt:parseDate value="${item.registDate }" pattern="yyyy-MM-dd'T'HH:mm:ss" var="date"/>
+							<td data-idx="${item.idx }">
+								<a><c:out value="${item.content }"></c:out></a>
+								<button type="button" style="float: right; margin-left:5px;" 
+									class="btn btn-primary replyModifyBtn">수정</button>
 								<button type="button" style="float: right;" class="btn btn-secondary" 
 									onclick="deleteReply('${item.idx}')">삭제</button>	
+								<fmt:parseDate value="${item.registDate }" pattern="yyyy-MM-dd'T'HH:mm:ss" var="date"/>
 								<br>(<fmt:formatDate value="${date }" pattern="yyyy-MM-dd HH:mm:ss"/>)
 							</td>
 						</tr>
@@ -98,6 +101,14 @@
 				<input type="hidden" name="boardIdx" value="${board.idx}"/>
 			</form>
 		</div>
+		
+		<form id="hiddenForm" style="display: none;"
+			action="${pageContext.request.contextPath}/replyModify.do" method="post">
+			<input type="text" name="content" style="width: 90%; margin-right: 6px;"/>
+			<input type="hidden" name="idx"/>
+			<input type="hidden" name="boardIdx" value="${board.idx }"/>
+			<button type="submit" class="btn btn-primary">확인</button>
+		</form>
 	</section>
 </body>
 
@@ -130,6 +141,30 @@
 			post(path, params);
 		}
 		
+		var replyModifyBtns = document.querySelectorAll(".replyModifyBtn");
+		
+		replyModifyBtns.forEach(el => el.addEventListener('click', event => {
+			var td = el.parentNode;
+			var content = td.getElementsByTagName('a')[0].innerHTML;
+			
+			td.innerHTML = '';
+			td.append(makeReplyUpdateForm(td.getAttribute('data-idx'), content));
+		}));
+		
+	}
+	
+	function makeReplyUpdateForm(idx, content){
+
+		var form = document.getElementById('hiddenForm').cloneNode(true);
+		form.style.display = '';
+
+		var contentInput = form.getElementsByTagName("input")[0];
+		contentInput.value = content;
+		
+		var idxInput = form.getElementsByTagName("input")[1];
+		idxInput.value = idx;
+	    
+	    return form;
 	}
 	
 	function deleteReply(idx){

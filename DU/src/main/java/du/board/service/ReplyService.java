@@ -13,5 +13,7 @@ public interface ReplyService {
 	public void insertReply(HttpSession session, ReplyVO reply);
 
 	public void deleteReply(long idx);
+
+	public void updateReply(ReplyVO reply);
 	
 }

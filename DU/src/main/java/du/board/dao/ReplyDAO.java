@@ -12,4 +12,6 @@ public interface ReplyDAO {
 
 	public void deleteReply(long idx);
 
+	public void updateReply(ReplyVO reply);
+
 }
