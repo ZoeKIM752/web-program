@@ -24,12 +24,23 @@ public class UserController {
 	private DeptService deptService;
 	
 	@RequestMapping("/userInfo.do")
-	public ModelAndView userInfoPage() {
-		ModelAndView mav = new ModelAndView("user/userInfo.jsp");
-		List<DeptVO> dept = deptService.selectDeptList();
-		mav.addObject("dept", dept);
-		
-		return mav;
+	public ModelAndView userInfoPage(HttpServletRequest request, UserVO user) {
+		if(userService.loginProcess(request, user)) {
+			ModelAndView mav = new ModelAndView("user/userInfo.jsp");
+			List<DeptVO> dept = deptService.selectDeptList();
+			mav.addObject("dept", dept);
+			
+			return mav;
+		}
+		else {
+			ModelAndView mav = new ModelAndView("main.jsp");
+			return mav;
+		}
+	}
+	
+	@RequestMapping("/userInfoConfirm.do")
+	public String userInfoConfirmPage() {
+		return "user/userInfoConfirm.jsp";
 	}
 	
 	@RequestMapping("/userModify.do")
