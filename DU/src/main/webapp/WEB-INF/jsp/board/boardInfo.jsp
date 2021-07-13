@@ -88,10 +88,12 @@
 							<th style="width: 10%"><c:out value="${item.writerName }"></c:out></th>
 							<td data-idx="${item.idx }">
 								<a><c:out value="${item.content }"></c:out></a>
-								<button type="button" style="float: right; margin-left:5px;" 
-									class="btn btn-primary replyModifyBtn">수정</button>
-								<button type="button" style="float: right;" class="btn btn-secondary" 
-									onclick="deleteReply('${item.idx}')">삭제</button>	
+								<c:if test="${USER.userId == item.writerId }">
+									<button type="button" style="float: right; margin-left:5px;" 
+										class="btn btn-primary replyModifyBtn">수정</button>
+									<button type="button" style="float: right;" class="btn btn-secondary" 
+										onclick="deleteReply('${item.idx}')">삭제</button>	
+								</c:if>
 								<fmt:parseDate value="${item.registDate }" pattern="yyyy-MM-dd'T'HH:mm:ss" var="date"/>
 								<br>(<fmt:formatDate value="${date }" pattern="yyyy-MM-dd HH:mm:ss"/>)
 							</td>
