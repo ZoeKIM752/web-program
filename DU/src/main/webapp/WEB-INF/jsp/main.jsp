@@ -5,15 +5,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>  
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Main Page</title>
+	
+<link rel="stylesheet" href="css/bootstrap/bootstrap.css">
+<link rel="stylesheet" href="css/main.css">
+<script type="text/javascript" src="js/bootstrap/bootstrap.bundle.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Main Page</title>
 </head>
 <body>
-	<h1>[<c:out value="${USER.name}"/>]님 반갑습니다~ ^_^</h1>
-	<h1>[<c:out value="${USER.name}"/>]님의 아이디는[<c:out value="${USER.userId}"/>]입니다!</h1>
-	<h1>[<c:out value="${USER.name}"/>]님의 아이디는[<c:out value="${USER.deptNm}"/>]입니다!</h1>
-	
-	<button type="button" style="right" onclick="window.location.href='logout.do'">로그아웃</button>
-	<button type="button" style="right" onclick="window.location.href='userInfoConfirmPage.do'">내정보</button>
+	<header>
+		<jsp:include page="/WEB-INF/jsp/layout/header.jsp"></jsp:include>
+	</header>
+		
 </body>
 </html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Dept">
+	<resultMap type="deptMap" id="DeptVO">
+		<id property="deptCd"		column="dept_cd"/>
+		<result property="deptNm"	column="dept_nm"/>
+	</resultMap>
+	
+	<select id="selectDeptList" resultMap="DeptVO">
+		<![CDATA[
+			SELECT
+				dept_cd, dept_nm
+			FROM
+				tb_dept_cd 
+		]]>
+	</select>
+	
+	<insert id="insertDept" parameterType="deptMap">
+		<![CDATA[
+			INSERT INTO tb_dept_cd
+				(dept_cd, dept_nm)
+			VALUES
+				(#{deptCd}, #{deptNm})
+		]]>
+	</insert>
+	
+	<delete id="deleteDept" parameterType="String">
+		<![CDATA[
+			DELETE FROM tb_dept_cd
+			WHERE
+				dept_cd = #{deptCd}
+			
+		]]>
+	</delete>
+</mapper>

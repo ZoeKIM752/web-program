@@ -1,11 +1,16 @@
 package du.user.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import du.dept.Service.DeptService;
+import du.dept.domain.DeptVO;
 import du.user.domain.UserVO;
 import du.user.service.UserService;
 
@@ -13,6 +18,8 @@ import du.user.service.UserService;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private DeptService deptService;
 	
 	@RequestMapping("/userInfoConfirmPage.do")
 	public String userInfoConfirmPage() {
@@ -20,17 +27,24 @@ public class UserController {
 	}
 	
 	@RequestMapping("/userInfoConfirm.do")
-	public String userInfoConfirm(UserVO user) {
+	public ModelAndView userInfoConfirm(UserVO user) {
 		if(userService.selectPwd(user.getUserId(), user.getPwd())) {
-			return "user/userInfo.jsp";
+			ModelAndView mav = new ModelAndView("user/userInfo.jsp");
+			List<DeptVO> dept = deptService.selectDeptList();
+			mav.addObject("dept", dept);
+			return mav;
 		} else {
-			return "main.jsp";
+			ModelAndView mav = new ModelAndView("main.jsp");
+			return mav;
 		}
 	}
 	
 	@RequestMapping("/signUpPage.do")
-	public String signUpPage() {
-		return "user/signUp.jsp";
+	public ModelAndView signUpPage() {
+		ModelAndView mav = new ModelAndView("user/signUp.jsp");
+		List<DeptVO> dept = deptService.selectDeptList();
+		mav.addObject("dept", dept);
+		return mav;
 	}
 	
 	@RequestMapping("/signUp.do")
