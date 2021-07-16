@@ -19,12 +19,14 @@ public interface BoardService {
 
 	public BoardVO selectBoard(long idx);
 
-	public void insertBoard(BoardVO board, HttpSession session);
+	public void insertBoard(BoardVO board, HttpSession session) throws Exception;
 
 	public void deleteBoard(long idx);
 
-	public void updateBoard(BoardVO board);
+	public void updateBoard(BoardVO boardVO, HttpSession session) throws Exception;
 	
 	public BoardAttFileVO findBoardAttFile(BoardAttFileVO criteria);
+	
+	public void deleteBoardAttFile(BoardAttFileVO criteria) throws Exception;
 	
 }

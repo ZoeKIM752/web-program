@@ -198,4 +198,14 @@
 				AND board_idx = #{boardIdx};				
 		]]>
 	</select>
+	
+	<delete id="deleteBoardAttFile" parameterType="BoardAttFileVO">
+		<![CDATA[
+			DELETE FROM
+				tb_board_att_file
+			WHERE
+				idx = #{idx}
+				AND board_idx = #{boardIdx};
+		]]>
+	</delete>
 </mapper>

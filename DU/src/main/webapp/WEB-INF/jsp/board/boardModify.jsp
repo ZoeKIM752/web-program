@@ -35,7 +35,9 @@
 		</style>
 		<title>Main Page</title>
 	</head>
+	
 	<body>
+	
 		<header>
 			<div style="display: flex; border-bottom: 1px solid black">
 				
@@ -54,9 +56,11 @@
 				</div>
 			</div>
 		</header>
+		
 		<section>
-			<form action="${pageContext.request.contextPath}/boardModify.do" method="post">
+			<form action="${contextPath}/boardModify.do" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="idx" value="${board.idx }" />
+				<input type="hidden" name="attIdx" value="${board.attIdx }" />
 			
 				<table class="table table-light" style="width: 50%;">
 					<tr>
@@ -69,8 +73,22 @@
 							<textarea style="width: 100%; height: 100px;" name="content" required><c:out value="${board.content }" /></textarea>
 						</td>
 					</tr>
-				</table>
-					
+					<tr>
+						<th rowspan="3">첨부파일</th>
+						<td><c:out value="${board.attFilename }" /></td>
+					</tr>
+					<tr>	
+						<td>
+							<input type="radio" name="handleType" value="fix" checked="checked"/><c:out value="고정" />
+							<input type="radio" name="handleType" value="chg"/><c:out value="변경" />
+							<input type="radio" name="handleType" value="del"/><c:out value="삭제" />
+						</td>
+					</tr>
+					<tr>						
+						<td><input type="file" name="attFile" /></td>
+					</tr>
+				</table>				
+				
 				<button type="button" class="btn btn-secondary" onclick="history.back(); return false;">이전 </button>
 				<button type="submit" class="btn btn-primary"> 수정 </button>
 			</form>

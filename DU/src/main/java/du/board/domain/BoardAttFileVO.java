@@ -29,11 +29,16 @@ public class BoardAttFileVO {
 	
 	public BoardAttFileVO() { }
 	
-	public BoardAttFileVO(BoardVO vo) { 
+	public BoardAttFileVO(long idx, long boardIdx) {
+		this.idx = idx;
+		this.boardIdx = boardIdx;
+	}
+	
+	public BoardAttFileVO(BoardVO vo) {
 		this.boardIdx = vo.getIdx();
 		this.writerId = vo.getWriterId();
 		this.attFile = vo.getAttFile();
-	}
+	}	
 
 	public long getIdx() {
 		return idx;

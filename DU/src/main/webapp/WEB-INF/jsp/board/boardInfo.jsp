@@ -71,7 +71,7 @@
 				</tr>
 				<tr>
 					<th>첨부파일</th>
-					<td>
+					<td colspan="3">
 						<a href="#" onclick="downloadFile(); return false;" >${board.attFilename }</a>
 					</td>
 				</tr>
@@ -84,6 +84,7 @@
 					<button type="submit" class="btn btn-secondary" formaction="${contextPath}/boardDelete.do">삭제</button>
 					<button type="submit" class="btn btn-primary" formaction="${contextPath}/boardModifyPage.do">수정 </button>
 					<input type="hidden" name="idx" value="${board.idx}" />
+					<input type="hidden" name="attIdx" value="${board.attIdx}" />
 				</form>							
 			</c:if>			
 		</section>

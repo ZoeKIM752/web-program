@@ -27,4 +27,6 @@ public interface BoardDAO {
 	
 	public BoardAttFileVO selectBoardAttFile(BoardAttFileVO criteria);
 	
+	public void deleteBoardAttFile(BoardAttFileVO criteria);
+	
 }

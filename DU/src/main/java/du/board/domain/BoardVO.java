@@ -26,6 +26,8 @@ public class BoardVO {
 	private long attIdx;
 	
 	private String attFilename;
+	
+	private String handleType;
 
 	public long getIdx() {
 		return idx;
@@ -105,10 +107,26 @@ public class BoardVO {
 
 	public void setAttFilename(String attFilename) {
 		this.attFilename = attFilename;
+	}	
+
+	public String getHandleType() {
+		return handleType;
 	}
-	
+
+	public void setHandleType(String handleType) {
+		this.handleType = handleType;
+	}
+
 	public boolean isExistAttFile() {
 		return attFile != null && attFile.getSize() > 0;
+	}
+	
+	public boolean hasAttFile() {
+		return attIdx > 0;
+	}
+	
+	public BoardAttFileVO getCriteria() {
+		return new BoardAttFileVO(attIdx, idx);
 	}
 	
 	@Override

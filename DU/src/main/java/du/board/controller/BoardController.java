@@ -54,7 +54,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value ="/boardWrite.do", method = RequestMethod.POST)
-	public String boardWrite(HttpSession session, @ModelAttribute BoardVO board) {
+	public String boardWrite(HttpSession session, @ModelAttribute BoardVO board) throws Exception{
 		boardService.insertBoard(board, session);
 				
 		return "redirect:/boardListPage.do";
@@ -71,8 +71,12 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/boardDelete.do")
-	public String boardDelete(long idx) {
-		boardService.deleteBoard(idx);
+	public String boardDelete(BoardVO boardVO) throws Exception {
+		if(boardVO.hasAttFile()) {
+			boardService.deleteBoardAttFile(boardVO.getCriteria());
+		}		
+		
+		boardService.deleteBoard(boardVO.getIdx());
 		
 		return "redirect:/boardListPage.do";
 	}
@@ -87,11 +91,11 @@ public class BoardController {
 		return mav;
 	}
 	
-	@RequestMapping("/boardModify.do")
-	public String boardModify(@ModelAttribute BoardVO board) {
-		boardService.updateBoard(board);
+	@RequestMapping(value = "/boardModify.do", method = RequestMethod.POST)
+	public String boardModify(BoardVO board, HttpSession session) throws Exception {
+		boardService.updateBoard(board, session);
 
-		return "redirect:/boardInfoPage/" + Long.toString(board.getIdx()) + ".do";
+		return "redirect:/boardInfoPage/" + Long.toString(board.getIdx()) + ".do";		
 	}
 	
 	@RequestMapping(value = "/download/boardAttFile.do", method = RequestMethod.POST)
