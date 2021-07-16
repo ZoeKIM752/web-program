@@ -6,5 +6,6 @@
 		<typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
 		<typeAlias alias="userMap" type="du.user.domain.UserVO"/>
 		<typeAlias alias="deptMap" type="du.dept.domain.DeptVO"/>
+		<typeAlias alias="boardMap" type="du.board.domain.BoardVO"/>
     </typeAliases>
 </configuration>
