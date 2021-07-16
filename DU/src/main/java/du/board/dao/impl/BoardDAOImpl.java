@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import du.board.dao.BoardDAO;
+import du.board.domain.BoardAttFileVO;
+import du.board.domain.BoardCriteria;
 import du.board.domain.BoardVO;
 import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
 
@@ -15,6 +17,11 @@ public class BoardDAOImpl extends EgovAbstractMapper implements BoardDAO {
 	@Override
 	public List<BoardVO> selectBoardList(HashMap<String, Object> map) {
 		return selectList("Board.selectBoardList", map);
+	}
+	
+	@Override
+	public List<BoardVO> selectBoardListByCri(BoardCriteria criteria){
+		return selectList("Board.selectBoardListByCriteria", criteria);
 	}
 
 	@Override
@@ -40,6 +47,16 @@ public class BoardDAOImpl extends EgovAbstractMapper implements BoardDAO {
 	@Override
 	public void updateBoard(BoardVO board) {
 		update("Board.updateBoard", board);
+	}
+
+	@Override
+	public void insertBoardAttFile(BoardAttFileVO attFileVO) {
+		insert("Board.insertBoardAttFile", attFileVO);		
+	}
+
+	@Override
+	public BoardAttFileVO selectBoardAttFile(BoardAttFileVO criteria) {
+		return selectOne("Board.selectBoardAttFile", criteria);
 	}
 
 }

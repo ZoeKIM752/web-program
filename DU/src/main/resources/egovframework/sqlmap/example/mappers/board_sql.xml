@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Board">
 
-	<resultMap type="boardMap" id="BoardVO">
+	<resultMap type="BoardVO" id="boardMap">
 		<id property="idx"				column="idx"/>
 		<result property="title"		column="title"/>
 		<result property="content"		column="content"/>
@@ -10,9 +10,28 @@
 		<result property="writerName"	column="writer_name"/>
 		<result property="registDate"	column="regist_date"/>
 		<result property="modifyDate"	column="modify_date"/>
+		<result property="attIdx"		column="att_idx"/>
+		<result property="attFilename"	column="att_filename"/>
 	</resultMap>
 	
-	<select id="selectBoardList" parameterType="HashMap" resultMap="BoardVO">
+	<resultMap type="BoardAttFileVO" id="boardAttMap">
+		<id		property="idx"			column="idx" />
+		<result	property="boardIdx"		column="board_idx" />
+		<result	property="filePath"		column="file_path" />
+		<result	property="oldFilename"	column="old_filename" />
+		<result	property="newFilename"	column="new_filename" />
+		<result	property="fileSize"		column="file_size" />		
+	</resultMap>
+	
+	<sql id="ifTitleIsNotNull">
+		<if test="title != ''">
+			<![CDATA[
+				A.title LIKE CONCAT('%', #{title}, '%')
+			]]>			
+		</if>
+	</sql>
+	
+	<select id="selectBoardList" parameterType="HashMap" resultMap="boardMap">
 		<![CDATA[ 
 			SELECT 
 				A.*, B.name AS writer_name
@@ -20,21 +39,64 @@
 				tb_board A INNER JOIN tb_user B ON A.writer_id = B.user_id
 		]]>
 		<where>
-			<if test="title != ''">
-				A.title LIKE CONCAT('%', #{title}, '%')
-			</if>
+			<include refid="ifTitleIsNotNull"/>			
 		</where>
 		<![CDATA[ 
+			ORDER BY
+				A.idx DESC
 			LIMIT #{startList}, #{listSize}
 		]]>
 	</select>
 	
-	<select id="selectBoard" parameterType="long" resultMap="BoardVO">
+	<select id="selectBoardListByCriteria" parameterType="BoardCriteria" resultMap="boardMap">
 		<![CDATA[ 
 			SELECT 
-				A.*, B.name AS writer_name
+				A.idx,
+				A.title,
+				A.content,
+				A.writer_id,				 
+				B.name AS writer_name,
+				A.regist_date,
+				A.modify_date
 			FROM 
-				tb_board A INNER JOIN tb_user B ON A.writer_id = B.user_id
+				tb_board A 
+				INNER JOIN 
+					tb_user B 
+				ON 
+					A.writer_id = B.user_id
+		]]>
+		<where>
+			<include refid="ifTitleIsNotNull"/>			
+		</where>
+		<![CDATA[ 
+			ORDER BY
+				A.idx DESC
+			LIMIT #{startList}, #{listSize}
+		]]>
+	</select>
+	
+	<select id="selectBoard" parameterType="long" resultMap="boardMap">
+		<![CDATA[ 
+			SELECT 
+				A.idx,
+				A.title,
+				A.content,
+				A.writer_id,				 
+				B.name AS writer_name,
+				A.regist_date,
+				A.modify_date,
+				C.idx AS att_idx,
+				C.old_filename AS att_filename
+			FROM 
+				tb_board A 
+			INNER JOIN 
+				tb_user B 
+			ON 
+				A.writer_id = B.user_id
+			LEFT OUTER JOIN
+				tb_board_att_file C
+			ON
+				A.idx = C.board_idx 
 			WHERE
 				A.idx = #{idx}
 		]]>
@@ -45,35 +107,48 @@
 			SELECT
 				count(*)
 			FROM
-				tb_board
+				tb_board A
 		]]>
 		<where>
-			<if test="value != ''">
-				title LIKE CONCAT('%', #{value}, '%')
-			</if>
+			<include refid="ifTitleIsNotNull"/>
 		</where>
 	</select>
 	
-	<insert id="insertBoard" parameterType="boardMap">
+	<insert id="insertBoard" parameterType="BoardVO">
 		<![CDATA[ 
-			INSERT INTO tb_board
-				(title, content, writer_id)
+			INSERT INTO 
+				tb_board
+			(
+				title, 
+				content, 
+				writer_id
+			)
 			VALUE 
-				(#{title}, #{content}, #{writerId})
+			(
+				#{title}, 
+				#{content}, 
+				#{writerId}
+			);
 		]]>
+		
+		<selectKey keyProperty="idx" order="AFTER" resultType="_int">
+			SELECT LAST_INSERT_ID();
+		</selectKey>
 	</insert>
 		
 	<delete id="deleteBoard" parameterType="long">
 		<![CDATA[ 
-			DELETE FROM tb_board
+			DELETE FROM 
+				tb_board
 			WHERE
 				idx = #{idx}
 		]]>
 	</delete>
 	
-	<update id="updateBoard" parameterType="boardMap">
+	<update id="updateBoard" parameterType="BoardVO">
 		<![CDATA[ 
-			UPDATE tb_board
+			UPDATE 
+				tb_board
 			SET
 				title = #{title},
 				content = #{content},
@@ -81,6 +156,46 @@
 			WHERE
 				idx = #{idx}
 		]]>
-	</update>
+	</update>	
 	
+	<insert id="insertBoardAttFile" parameterType="BoardAttFileVO">
+		<![CDATA[
+			INSERT INTO
+				tb_board_att_file
+			(
+				board_idx,
+				file_path,
+				old_filename,
+				new_filename,
+				file_size,
+				writer_id
+			)
+			VALUES
+			(
+				#{boardIdx},
+				#{filePath},
+				#{oldFilename},
+				#{newFilename},
+				#{fileSize},
+				#{writerId}
+			);
+		]]>
+	</insert>
+	
+	<select id="selectBoardAttFile" parameterType="BoardAttFileVO" resultMap="boardAttMap">
+		<![CDATA[
+			SELECT
+				idx,
+				board_idx,
+				file_path,
+				old_filename,
+				new_filename,
+				file_size
+			FROM
+				tb_board_att_file
+			WHERE
+				idx = #{idx}
+				AND board_idx = #{boardIdx};				
+		]]>
+	</select>
 </mapper>

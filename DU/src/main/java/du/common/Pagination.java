@@ -1,37 +1,37 @@
 package du.common;
 
 public class Pagination {
-	
-	private int listSize = 2;
-	
-	private int rangeSize = 2;
+
+	protected int listSize = 10;
+		
+	protected int rangeSize = 10;
 	
 	//현재 페이지
-	private int page;
+	protected int page = 1;
 	
 	//현재 페이지 범위
-	private int range;
+	protected int range = 1;
 	
 	//총 게시물 수
-	private int listCnt;
+	protected int listCnt;
 	
 	//총 페이지 범위 개수
-	private int pageCnt;
+	protected int pageCnt;
 	
 	//각 페이지 범위의 시작번호
-	private int startPage;
+	protected int startPage;
 	
 	//
-	private int startList;
+	protected int startList;
 	
 	//각 페이지 범위의 끝 번호
-	private int endPage;
+	protected int endPage;
 	
 	//이전 페이지 여부
-	private boolean prev;
+	protected boolean prev;
 	
 	//다음 페이지 여부
-	private boolean next;
+	protected boolean next;
 
 	public int getListSize() {
 		return listSize;
@@ -121,26 +121,33 @@ public class Pagination {
 		this.listCnt = listCnt;
 		
 		//total page cnt
-		this.pageCnt = (int) Math.ceil((float)listCnt/listSize);
+		this.pageCnt = (int) Math.ceil((float)listCnt / listSize);
 		
 		//start page
 		this.startPage = (range - 1) * rangeSize + 1;
 		
 		//end page
 		this.endPage = range * rangeSize;
+		if(endPage >= pageCnt) {
+			endPage = pageCnt;
+		}
 		
 		//board start count
 		this.startList = (page - 1) * listSize;
 		
 		//prev state
-		this.prev = range == 1 ? false : true;
+		//this.prev = range == 1 ? false : true;
+		this.prev = (range != 1);
 		
 		//next state
-		this.next = endPage > pageCnt ? false : true;
+		//this.next = endPage > pageCnt ? false : true;
+		this.next = (endPage < pageCnt);
+		/*
 		if(endPage >= pageCnt) {
 			this.endPage = this.pageCnt;
 			this.next = false;
 		}
+		*/
 	}
 	
 }

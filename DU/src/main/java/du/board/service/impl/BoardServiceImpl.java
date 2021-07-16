@@ -5,12 +5,17 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import du.board.dao.BoardDAO;
+import du.board.domain.BoardAttFileVO;
+import du.board.domain.BoardCriteria;
 import du.board.domain.BoardVO;
 import du.board.service.BoardService;
+import du.common.FileUploadUtil;
 import du.common.Pagination;
 import du.user.domain.UserVO;
 
@@ -19,6 +24,9 @@ public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	private BoardDAO boardDAO;
+	
+	@SuppressWarnings("unused")
+	private Logger logger = LoggerFactory.getLogger(BoardServiceImpl.class);
 	
 	@Override
 	public List<BoardVO> selectBoardList(Pagination pagination, String title) {
@@ -30,6 +38,11 @@ public class BoardServiceImpl implements BoardService {
 		map.put("title", title);
 		
 		return boardDAO.selectBoardList(map);
+	}
+	
+	@Override
+	public List<BoardVO> selectBoardList(BoardCriteria criteria) {
+		return boardDAO.selectBoardListByCri(criteria);
 	}
 
 	@Override
@@ -43,14 +56,29 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void insertBoard(BoardVO board, HttpSession session) {
+	public void insertBoard(BoardVO boardVO, HttpSession session) {
 		UserVO user = (UserVO) session.getAttribute("USER");
 		
-		if (user != null) {
-			board.setWriterId(user.getUserId());
-			
-			boardDAO.insertBoard(board);
+		if(user == null) {
+			return;
 		}
+		
+		boardVO.setWriterId(user.getUserId());		
+		boardDAO.insertBoard(boardVO);
+		
+		if(!boardVO.isExistAttFile()) {
+			return;
+		}
+		
+		BoardAttFileVO attFileVO = new BoardAttFileVO(boardVO);
+		try {
+			FileUploadUtil.uploadBoardAttFileVO(attFileVO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		boardDAO.insertBoardAttFile(attFileVO);
+		
 	}
 
 	@Override
@@ -62,5 +90,37 @@ public class BoardServiceImpl implements BoardService {
 	public void updateBoard(BoardVO board) {
 		boardDAO.updateBoard(board);
 	}
-	
+/*
+	이 주석을 삭제하지 않는 이유는 강의시간에 FileUploadUtil 클래스를 만드는 것이 
+	수업 범위를 넘어서지 않는지 의심스럽기 때문임...
+	private void uploadBoardAttFile(BoardAttFileVO attFileVO) throws IllegalStateException, IOException {
+		String fileStorePath = propertiesService.getString("fileStorePath");
+		String dailyPath = LocalDate.now().toString();
+		String filePath = fileStorePath + File.separator + dailyPath;
+		
+		File directory = new File(filePath);
+		if(!directory.exists()) {
+			directory.mkdir();
+		}	
+		attFileVO.setFilePath(filePath);
+		
+		MultipartFile multipartFile = attFileVO.getAttFile();
+		String originalFilename = multipartFile.getOriginalFilename();
+		attFileVO.setOldFilename(originalFilename);
+		
+		int pos = originalFilename.lastIndexOf(".");		
+		String ext = originalFilename.substring(pos);
+		String newFilenameBody = Generators.timeBasedGenerator().generate().toString();		
+		String newFilename = newFilenameBody + ext;	
+		attFileVO.setNewFilename(newFilename);
+		
+		File newFile = new File(filePath + File.separator + newFilename);
+		multipartFile.transferTo(newFile);		
+	}
+*/
+
+	@Override
+	public BoardAttFileVO findBoardAttFile(BoardAttFileVO criteria) {
+		return boardDAO.selectBoardAttFile(criteria);
+	}
 }
