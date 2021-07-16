@@ -71,12 +71,8 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/boardDelete.do")
-	public String boardDelete(BoardVO boardVO) throws Exception {
-		if(boardVO.hasAttFile()) {
-			boardService.deleteBoardAttFile(boardVO.getCriteria());
-		}		
-		
-		boardService.deleteBoard(boardVO.getIdx());
+	public String boardDelete(BoardVO boardVO) throws Exception {		
+		boardService.deleteBoard(boardVO);
 		
 		return "redirect:/boardListPage.do";
 	}
@@ -109,7 +105,6 @@ public class BoardController {
 		mv.addObject("downloadFilename", attFileVO.getOldFilename());
 		
 		return mv;
-	}
-	
+	}	
 	
 }

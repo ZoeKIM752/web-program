@@ -69,10 +69,14 @@ public class BoardServiceImpl implements BoardService {
 		
 		insertBoardAttFile(boardVO);
 	}
-
+	
 	@Override
-	public void deleteBoard(long idx) {
-		boardDAO.deleteBoard(idx);
+	public void deleteBoard(BoardVO boardVO) throws Exception {
+		if(boardVO.hasAttFile()) {
+			deleteBoardAttFile(boardVO.getCriteria());
+		}	
+		
+		boardDAO.deleteBoard(boardVO.getIdx());
 	}
 
 	@Override
@@ -83,15 +87,10 @@ public class BoardServiceImpl implements BoardService {
 			return;
 		}
 		
-		boardVO.setWriterId(user.getUserId());	
+		boardVO.setWriterId(user.getUserId());
 		
-		try {
-			boardDAO.updateBoard(boardVO);
-			
-			updateBoardAttFile(boardVO);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
+		boardDAO.updateBoard(boardVO);		
+		updateBoardAttFile(boardVO);		
 	}
 
 	@Override
@@ -115,25 +114,20 @@ public class BoardServiceImpl implements BoardService {
 		BoardAttFileVO criteria = boardVO.getCriteria();
 		boolean hasAttFile = boardVO.hasAttFile();
 		
-		switch(handleType) {
-		case "fix":
-			return;			
-		case "del":
-			if(hasAttFile) {
-				deleteBoardAttFile(criteria);
-				boardDAO.deleteBoardAttFile(criteria);		
-			}
-			break;
-		case "chg":
-			if(boardVO.hasAttFile()) {
-				deleteBoardAttFile(criteria);
-				boardDAO.deleteBoardAttFile(criteria);		
-			}
+		if("fix".equals(handleType)) {
+			return;
+		}
+		
+		if(hasAttFile) {
+			deleteBoardAttFile(criteria);
+			boardDAO.deleteBoardAttFile(criteria);
+		}
+		
+		if("del".equals(handleType)) {
+			return;
+		} else if("chg".equals(handleType)) {
 			insertBoardAttFile(boardVO);
-			break;
-		default:
-			
-		}			
+		}
 	}
 	
 	private void insertBoardAttFile(BoardVO boardVO) throws Exception{
@@ -150,4 +144,5 @@ public class BoardServiceImpl implements BoardService {
 		
 		boardDAO.insertBoardAttFile(attFileVO);
 	}
+	
 }

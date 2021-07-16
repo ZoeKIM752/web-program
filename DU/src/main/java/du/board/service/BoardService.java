@@ -20,8 +20,8 @@ public interface BoardService {
 	public BoardVO selectBoard(long idx);
 
 	public void insertBoard(BoardVO board, HttpSession session) throws Exception;
-
-	public void deleteBoard(long idx);
+	
+	public void deleteBoard(BoardVO boardVO) throws Exception;
 
 	public void updateBoard(BoardVO boardVO, HttpSession session) throws Exception;
 	
