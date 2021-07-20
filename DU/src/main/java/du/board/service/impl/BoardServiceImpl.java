@@ -1,6 +1,7 @@
 package du.board.service.impl;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,6 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.uuid.Generators;
 
 import du.board.dao.BoardDAO;
 import du.board.domain.BoardAttFileVO;
@@ -19,12 +23,16 @@ import du.board.service.BoardService;
 import du.common.FileUploadUtil;
 import du.common.Pagination;
 import du.user.domain.UserVO;
+import egovframework.rte.fdl.property.EgovPropertyService;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	private BoardDAO boardDAO;
+	
+	@Autowired
+	private EgovPropertyService propertyService;
 	
 	@SuppressWarnings("unused")
 	private Logger logger = LoggerFactory.getLogger(BoardServiceImpl.class);
@@ -107,6 +115,8 @@ public class BoardServiceImpl implements BoardService {
 		if(file.exists() && !file.isDirectory()) {
 			file.delete();
 		}
+		
+		boardDAO.deleteBoardAttFile(criteria);
 	}
 	
 	private void updateBoardAttFile(BoardVO boardVO) throws Exception {
@@ -119,8 +129,7 @@ public class BoardServiceImpl implements BoardService {
 		}
 		
 		if(hasAttFile) {
-			deleteBoardAttFile(criteria);
-			boardDAO.deleteBoardAttFile(criteria);
+			deleteBoardAttFile(criteria);			
 		}
 		
 		if("del".equals(handleType)) {
@@ -130,7 +139,8 @@ public class BoardServiceImpl implements BoardService {
 		}
 	}
 	
-	private void insertBoardAttFile(BoardVO boardVO) throws Exception{
+	@SuppressWarnings("unused")
+	private void insertBoardAttFile2(BoardVO boardVO) throws Exception{
 		if(!boardVO.isExistAttFile()) {
 			return;
 		}
@@ -139,10 +149,55 @@ public class BoardServiceImpl implements BoardService {
 		try {
 			FileUploadUtil.uploadBoardAttFileVO(attFileVO);
 		} catch (Exception e) {
-			e.printStackTrace();
+			new RuntimeException();
 		}
 		
 		boardDAO.insertBoardAttFile(attFileVO);
+	}
+	
+	private void insertBoardAttFile(BoardVO boardVO) throws Exception{
+		if(!boardVO.isExistAttFile()) {
+			return;
+		}
+		
+		BoardAttFileVO attFileVO = new BoardAttFileVO(boardVO);
+		try {
+			uploadBoardAttFileVO(attFileVO);
+		} catch (Exception e) {
+			new RuntimeException();
+		}
+		
+		boardDAO.insertBoardAttFile(attFileVO);
+	}
+	
+	private void uploadBoardAttFileVO(BoardAttFileVO attFileVO) throws Exception{
+		// 1. filePath
+		String fileStorePath = propertyService.getString("fileStorePath");
+		String dailyPath = LocalDate.now().toString();
+		String filePath = fileStorePath + dailyPath;
+		
+		File directory = new File(filePath);
+		if(!directory.exists()) {
+			directory.mkdir();
+		}	
+		attFileVO.setFilePath(filePath);
+		
+		// 2. oldFilename
+		MultipartFile multipartFile = attFileVO.getAttFile();
+		String originalFilename = multipartFile.getOriginalFilename();
+		attFileVO.setOldFilename(originalFilename);
+		
+		// 3. newFilename and fileSize
+		int pos = originalFilename.lastIndexOf(".");		
+		String ext = originalFilename.substring(pos);
+		String newFilenameBody = Generators.timeBasedGenerator().generate().toString();		
+		String newFilename = newFilenameBody + ext;	
+		attFileVO.setNewFilename(newFilename);
+		attFileVO.setFileSize(multipartFile.getSize());		
+		
+		// 4. real file copy
+		File newFile = new File(filePath + File.separator + newFilename);
+		multipartFile.transferTo(newFile);
 	}
 	
 }

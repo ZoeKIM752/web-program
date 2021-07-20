@@ -9,22 +9,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class BoardAttFileVO {
 
-	private long idx;
-	
-	private long boardIdx;
-	
-	private String filePath;
-	
-	private String oldFilename;
-	
-	private String newFilename;
-	
-	private long fileSize;
-	
-	private String writerId;
-	
+	private long idx;	
+	private long boardIdx;	
+	private String filePath;	
+	private String oldFilename;	
+	private String newFilename;	
+	private long fileSize;	
+	private String writerId;	
 	private LocalDateTime registDate;	
-	
 	private MultipartFile attFile;
 	
 	public BoardAttFileVO() { }
@@ -108,7 +100,7 @@ public class BoardAttFileVO {
 		return this.attFile;
 	}
 	
-	public String getFullAttFilePath() throws Exception{
+	public String getFullAttFilePath() throws FileNotFoundException {
 		if(idx > 0 && boardIdx > 0) {
 			return filePath + File.separator + newFilename;
 		}		

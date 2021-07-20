@@ -9,16 +9,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
 import du.board.domain.BoardAttFileVO;
 import du.board.domain.BoardCriteria;
 import du.board.domain.BoardVO;
 import du.board.service.BoardService;
+import du.common.DownloadView;
 
 @Controller
 public class BoardController {
@@ -60,7 +63,7 @@ public class BoardController {
 		return "redirect:/boardListPage.do";
 	}
 	
-	@RequestMapping("/boardInfoPage/{idx}.do")
+	@RequestMapping(value ="/boardInfoPage/{idx}.do", method = RequestMethod.GET)
 	public ModelAndView boardInfoPage(@PathVariable("idx") long idx) {
 		ModelAndView mav = new ModelAndView("board/boardInfo.jsp");
 		
@@ -90,21 +93,19 @@ public class BoardController {
 	@RequestMapping(value = "/boardModify.do", method = RequestMethod.POST)
 	public String boardModify(BoardVO board, HttpSession session) throws Exception {
 		boardService.updateBoard(board, session);
-
-		return "redirect:/boardInfoPage/" + Long.toString(board.getIdx()) + ".do";		
+		
+		return String.format("redirect:/boardInfoPage/%d.do", board.getIdx());
 	}
 	
 	@RequestMapping(value = "/download/boardAttFile.do", method = RequestMethod.POST)
-	public ModelAndView downloadBoardAttFile(BoardAttFileVO criteria, ModelAndView mv) throws Exception {		
-		mv.setViewName("downloadView");		
-		
+	public View downloadBoardAttFile(BoardAttFileVO criteria, Model model) throws Exception {		
 		BoardAttFileVO attFileVO = boardService.findBoardAttFile(criteria);
 		File file = new File(attFileVO.getFullAttFilePath());
 		
-		mv.addObject("downloadFile", file);
-		mv.addObject("downloadFilename", attFileVO.getOldFilename());
+		model.addAttribute("downloadFile", file);
+		model.addAttribute("downloadFilename", attFileVO.getOldFilename());
 		
-		return mv;
-	}	
+		return new DownloadView();
+	}
 	
 }

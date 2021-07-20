@@ -48,17 +48,17 @@
 				
 				<div class="rightBtnDiv">
 					<button type="button" class="btn btn-primary" style="margin-rigth: 3px;" 
-						onclick="window.location.href='${contextPath}/userInfoConfirm.do'">회원정보 </button>
+						onclick="window.location.href='${contextPath}/userInfoConfirm.do'" >회원정보 </button>
 						
 					<button type="button" class="btn btn-secondary" 
-						onclick="window.location.href='${contextPath}/logout.do'">로그아웃 </button>
+						onclick="window.location.href='${contextPath}/logout.do'" >로그아웃 </button>
 				</div>
 				
 			</div>
 		</header>
 		
 		<section>
-			<form action="${contextPath}/boardWrite.do" method="post" enctype="multipart/form-data">
+			<form action="${contextPath}/boardWrite.do" method="post" enctype="multipart/form-data" >
 				<table class="table table-light" style="width: 50%;">
 					<tr>
 						<th>제목</th>
