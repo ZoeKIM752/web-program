@@ -3,7 +3,7 @@ package du.common;
 public class Pagination {
 
 	//한페이지당 보여질 목록 갯수
-	private int listSize = 5;
+	private int listSize = 10;
 	
 	//한 페이지 범위에 보여질 페이지 갯수
 	private int rangeSize = 2;

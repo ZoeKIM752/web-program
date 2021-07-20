@@ -45,4 +45,13 @@ public class MainController {
 		session.removeAttribute("USER");
 		return "login.jsp";
 	}
+	
+	@RequestMapping("/mainPage.do")
+	public String mainPage(HttpSession session) {
+		
+		if(session.getAttribute("USER") == null) {
+			return "redirect:/loginPage.do";
+		}
+		return "main.jsp";
+	}
 }
